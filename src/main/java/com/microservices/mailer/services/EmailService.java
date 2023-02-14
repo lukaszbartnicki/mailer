@@ -32,12 +32,11 @@ public class EmailService{
         emailSender.send(message);
     }
 
-    public Long sendEmailsTo(List<UserModel> users, EmailBody emailBody) {
+    public Long sendEmailsTo(List<UserModel> users, EmailBody emailBody) throws Exception {
         try {
             Long emailsSend = 0L;
             if (users.isEmpty()) {
-                logger.log().info("Tried to send emails, but no emails found in database!");
-                return null;
+                throw new Exception("Tried to send emails, but no emails found in database!");
             }
             else {
                 for (UserModel user : users) {
@@ -49,7 +48,7 @@ public class EmailService{
             }
         }catch (Exception e){
             logger.log().info("Error occurred during sending emails: " + e);
-            return null;
+            throw new Exception("Error occurred during sending emails", e);
         }
 
     }

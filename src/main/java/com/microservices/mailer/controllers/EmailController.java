@@ -23,7 +23,7 @@ public class EmailController {
     EmailService emailService;
 
     @GetMapping("/sendEmails")
-    public String emailSender(@RequestBody EmailBody emailBody) {
+    public String emailSender(@RequestBody EmailBody emailBody) throws Exception {
             List<UserModel> users = userServices.getAll();
             Long emailsSend = emailService.sendEmailsTo(users, emailBody);
             if (users.isEmpty()) {

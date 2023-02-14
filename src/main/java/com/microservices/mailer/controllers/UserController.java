@@ -19,24 +19,24 @@ public class UserController {
 
     @PostMapping("/AddEmail")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserModel addEmail(@RequestBody UserEntity entity) {
+    public UserModel addEmail(@RequestBody UserEntity entity) throws Exception {
         return userService.createUser(entity);
     }
     @GetMapping("/GetAll")
     @ResponseStatus(HttpStatus.OK)
-    public List<UserModel> getAllEmails(){
+    public List<UserModel> getAllEmails() throws Exception {
         return userService.getAll();
     }
 
     @DeleteMapping("/DeleteEmail/{email}")
     @ResponseStatus(HttpStatus.OK)
-    public UserModel remove(@PathVariable String email) {
+    public UserModel remove(@PathVariable String email) throws Exception {
         return userService.remove(email);
     }
 
     @PutMapping("/ChangeEmail")
     @ResponseStatus(HttpStatus.OK)
-    public UserModel changeMail(@RequestParam String email, @RequestParam String newEmail){
+    public UserModel changeMail(@RequestParam String email, @RequestParam String newEmail) throws Exception {
         return userService.changeEmail(email, newEmail);
     }
 
