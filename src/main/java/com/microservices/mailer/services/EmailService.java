@@ -1,13 +1,12 @@
 package com.microservices.mailer.services;
 
+import com.microservices.mailer.config.GeneralLogger;
 import com.microservices.mailer.dto.EmailBody;
 import com.microservices.mailer.dto.UserModel;
-import com.microservices.mailer.models.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -15,6 +14,13 @@ public class EmailService{
 
     @Autowired
     private JavaMailSender emailSender;
+
+    @Autowired
+    private GeneralLogger logger;
+
+    @Autowired
+    UserService userServices;
+
 
     public void sendSimpleMessage(
             String to, String subject, String text) {
@@ -27,11 +33,24 @@ public class EmailService{
     }
 
     public Long sendEmailsTo(List<UserModel> users, EmailBody emailBody) {
-        Long emailsSend = 0L;
-        for(UserModel user : users){
-            sendSimpleMessage(user.getEmail(), emailBody.getSubject(), emailBody.getBody());
-            emailsSend++;
+        try {
+            Long emailsSend = 0L;
+            if (users.isEmpty()) {
+                logger.log().info("Tried to send emails, but no emails found in database!");
+                return null;
+            }
+            else {
+                for (UserModel user : users) {
+                    sendSimpleMessage(user.getEmail(), emailBody.getSubject(), emailBody.getBody());
+                    emailsSend++;
+                }
+                logger.log().info(emailsSend + " emails sent with subject: \r\n" + emailBody.getSubject() + "\r\nand message: \r\n" + emailBody.getBody());
+                return emailsSend;
+            }
+        }catch (Exception e){
+            logger.log().info("Error occurred during sending emails: " + e);
+            return null;
         }
-        return emailsSend;
+
     }
 }

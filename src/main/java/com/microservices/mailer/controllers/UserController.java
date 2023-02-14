@@ -36,8 +36,8 @@ public class UserController {
 
     @PutMapping("/ChangeEmail")
     @ResponseStatus(HttpStatus.OK)
-    public UserModel changeMail(@RequestParam String oldEmail, @RequestParam String newEmail){
-        return userService.changeEmail(oldEmail, newEmail);
+    public UserModel changeMail(@RequestParam String email, @RequestParam String newEmail){
+        return userService.changeEmail(email, newEmail);
     }
 
 

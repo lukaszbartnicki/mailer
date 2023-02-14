@@ -23,10 +23,14 @@ public class EmailController {
     EmailService emailService;
 
     @GetMapping("/sendEmails")
-    public String getTest(@RequestBody EmailBody emailBody) {
-        List<UserModel> users = userServices.getAll();
-        Long emailsSend = emailService.sendEmailsTo(users, emailBody);
-        return "Amount of emails send to users: " + emailsSend;
+    public String emailSender(@RequestBody EmailBody emailBody) {
+            List<UserModel> users = userServices.getAll();
+            Long emailsSend = emailService.sendEmailsTo(users, emailBody);
+            if (users.isEmpty()) {
+                return "No emails in the database!";
+            } else {
+                return "Amount of emails send to users: " + emailsSend;
+            }
     }
 
 }
