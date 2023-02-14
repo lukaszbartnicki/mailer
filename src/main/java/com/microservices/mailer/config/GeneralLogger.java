@@ -1,6 +1,5 @@
 package com.microservices.mailer.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -9,11 +8,11 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 @Service
-public class OgolnyLogger {
+public class GeneralLogger {
 
-    private Logger log = Logger.getLogger("OgolnyLog");
+    private final Logger log = Logger.getLogger("GeneralLog");
 
-    FileHandler hf;
+    FileHandler fh;
 
 
     public Logger log(){
@@ -22,10 +21,10 @@ public class OgolnyLogger {
     @PostConstruct
     private void Init() {
         try{
-            hf = new FileHandler("D:/Ogolny.txt");
-            log.addHandler(hf);
+            fh = new FileHandler("D:/General.txt");
+            log.addHandler(fh);
             SimpleFormatter formatter = new SimpleFormatter();
-            hf.setFormatter(formatter);
+            fh.setFormatter(formatter);
         } catch (Exception e) {
             e.printStackTrace();
         }

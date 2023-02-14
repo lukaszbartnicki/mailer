@@ -3,7 +3,6 @@ package com.microservices.mailer.config;
 
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
-import org.springframework.core.log.LogMessage;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.util.ContentCachingRequestWrapper;
@@ -22,17 +21,17 @@ import java.util.logging.SimpleFormatter;
 public class LoggableDispatcherServlet extends DispatcherServlet {
 
     private final Log logger = LogFactory.getLog(getClass());
-    private Logger log = Logger.getLogger("MyLog");
+    private final Logger log = Logger.getLogger("MyLog");
 
-    FileHandler hf;
+    FileHandler fh;
 
     @PostConstruct
     private void Init() {
         try{
-            hf = new FileHandler("D:/log.txt");
-            log.addHandler(hf);
+            fh = new FileHandler("D:/log.txt");
+            log.addHandler(fh);
             SimpleFormatter formatter = new SimpleFormatter();
-            hf.setFormatter(formatter);
+            fh.setFormatter(formatter);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,7 +80,8 @@ public class LoggableDispatcherServlet extends DispatcherServlet {
 
                     return new String(buf, 0, length, wrapper.getCharacterEncoding());
                 }
-                catch (UnsupportedEncodingException ex) {
+                catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
             }
         }
