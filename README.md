@@ -109,8 +109,8 @@ as as Body -> raw -> JSON, where {} should be replaced by Your mail's subject an
 Sending emails could take a while. In response body should appers information about number of emails sent, or an error, if list of emails is empty.
 By default, emails will be sent from email zauwazyczewszystkiewyjatki@outlook.com. If You want to change it, go to Configuration section below.
 ## Configuration
-As mentioned in Usage/Examples section, default sender email would be zauwazyczewszystkiewyjatki@outlook.com, which was created especially for this application as a random quote from the book.
-If You want to change it, go to com.microservices.mailer.config.ApplicationConfig and there You have to change
+#As mentioned in Usage/Examples section, default sender email would be zauwazyczewszystkiewyjatki@outlook.com, which was created especially for this application as a random quote from the book.
+If You want to change it, go to com.microservices.mailer.config.ApplicationConfig and there You have to change:
 ```
 mailSender.setUsername("{}");
 mailSender.setPassword("{}");
@@ -122,7 +122,14 @@ mailSender.setHost("{}");
 mailSender.setPort({});
 ```
 with server and port respectively.
-You can also change regex pattern to validate email addresses, if You want to, as used one is very basic. To do it go to com.microservices.mailer.services.UserService and replace String regexPattern content:
+
+#Logs are stored by default in D:/ drive. If You want to change it, go to com.microservices.mailer.config.GeneralLogger for general log or  go to com.microservices.mailer.config.LoggableDispatcherServlet to change location of requests and responses log:and change the content of:
+```
+fh = new FileHandler("{}");
+```
+where {} should be patch to Your logging files.
+
+#You can also change regex pattern to validate email addresses, if You want to, as used one is very basic. To do it go to com.microservices.mailer.services.UserService and replace String regexPattern content:
 ```
 String regexPattern = "{}";
 ```
