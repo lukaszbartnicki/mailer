@@ -1,5 +1,6 @@
 package com.microservices.mailer.services;
 
+import org.junit.jupiter.api.DisplayName;
 import org.mockito.Mock;
 
 import java.util.Collections;
@@ -36,6 +37,7 @@ public class UserServiceTest {
     private final String email2 = "anotherexample@mail.com";
     private final String notEmail = "notAnEmail";
 
+    @DisplayName("JUnit test for creating new user with valid email in UserService")
     @Test
     void testCreateUserWithValidEmail() throws Exception {
         UserEntity userEntity = new UserEntity();
@@ -47,7 +49,7 @@ public class UserServiceTest {
 
         assertEquals(email1, userModel.getEmail());
     }
-
+    @DisplayName("JUnit test for creating new user with invalid email in UserService")
     @Test
     public void testCreateUserWrongMail() {
         UserEntity userEntity = new UserEntity();
@@ -61,8 +63,8 @@ public class UserServiceTest {
         assertTrue(exception.getCause() instanceof MailerExceptions.InvalidEmailException);
         assertEquals("Tried to add " + userEntity.getEmail() + " but it is not a correct email address!", exception.getCause().getMessage());
     }
-
-    //    @Test
+//    @DisplayName("JUnit test for creating new user when same email already exist in database operation in UserService")
+//    @Test
 //    public void testCreateUserIfAlreadyExists() throws Exception {
 //        UserEntity user1 = new UserEntity();
 //        UserEntity user2 = new UserEntity();
@@ -80,6 +82,7 @@ public class UserServiceTest {
 //        assertTrue(exception.getCause() instanceof MailerExceptions.DuplicateMailException);
 //        assertEquals("Tried add new email " + user2.getEmail() + ", but was already in the database", exception.getCause().getMessage());
 //    }
+    @DisplayName("JUnit test for get all emails in UserService")
     @Test
     public void testGetAll() throws Exception {
         UserEntity user1 = new UserEntity();
@@ -99,6 +102,7 @@ public class UserServiceTest {
 
         assertEquals(userModels, result);
     }
+    @DisplayName("JUnit test for get all emails when database is empty in UserService")
     @Test
     public void testGetAllWhenEmpty() {
         Exception exception = assertThrows(Exception.class, () -> {
@@ -109,6 +113,8 @@ public class UserServiceTest {
         assertTrue(exception.getCause() instanceof MailerExceptions.EmptyListException);
         assertEquals("Tried to list all emails, but found none", exception.getCause().getMessage());
     }
+
+//    @DisplayName("JUnit test for removing email from database")
 //    @Test
 //    public void testRemove() throws Exception {
 //        UserEntity userEntity = new UserEntity(1L, email1);
@@ -119,7 +125,7 @@ public class UserServiceTest {
 //        when(userRepository.findByEmail(email1)).thenReturn(userEntity);
 //        doCallRealMethod().when(userRepository).delete(userEntity);
 //
-//        userService.remove(email1);
+//        userService.remove(email1); //nie usuwa maila
 //
 //        assertNull(userRepository.findByEmail(email1));
 //    }

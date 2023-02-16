@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -13,7 +14,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 public class UserEntityTest {
     @PersistenceContext
     private EntityManager entityManager;
-
+    @DisplayName("JUnit test for checking save and find operations in UserEntity")
     @Test
     public void testSaveAndFind() {
         UserEntity user = new UserEntity();

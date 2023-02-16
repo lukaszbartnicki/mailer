@@ -24,7 +24,7 @@ class UserRepositoryTest {
     private final String mail1 = "ab@wp.pl";
     private final String mail2 = "dc@wp.pl";
 
-    @DisplayName("JUnit test for get all emails operation")
+    @DisplayName("JUnit test for find all emails operation in UserRepository")
     @Test
     void findAll() {
         UserEntity user1 = new UserEntity(1L,mail1);
@@ -49,7 +49,7 @@ class UserRepositoryTest {
 
         assertTrue(userEntityList.contains(user1)&&userEntityList.contains(user2));
     }
-
+    @DisplayName("JUnit test for find by email operation in UserRepository")
     @Test
     void findByEmail() {
         UserEntity user1 = new UserEntity(1L,mail1);
@@ -77,7 +77,7 @@ class UserRepositoryTest {
         assertSame(mail1, userEntity1.getEmail());
         assertSame(mail2, userEntity2.getEmail());
     }
-
+    @DisplayName("JUnit test for checking if email exist operation")
     @Test
     void existsByEmail() {
         UserEntity user1 = new UserEntity(1L,mail1);

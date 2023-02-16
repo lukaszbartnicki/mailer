@@ -2,6 +2,7 @@ package com.microservices.mailer.mappers;
 
 import com.microservices.mailer.dto.UserModel;
 import com.microservices.mailer.models.UserEntity;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ModelMapperTest {
 
+
+    @DisplayName("JUnit test for checking toUserModel operation in ModelMapper")
     @Test
     public void testToUserModel() {
         UserEntity userEntity = new UserEntity();
@@ -21,6 +24,7 @@ public class ModelMapperTest {
         assertEquals(userEntity.getEmail(), userModel.getEmail());
     }
 
+    @DisplayName("JUnit test for checking toUserModelList operation in ModelMapper")
     @Test
     public void testToUserModelList() {
         List<UserEntity> userEntityList = new ArrayList<>();

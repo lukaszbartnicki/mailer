@@ -84,22 +84,20 @@ public class UserService {
     }
     public UserModel changeEmail(String email, String newEmail) throws RuntimeException {
         try {
-            if ((newEmail.matches(regexPattern))) {
-                UserEntity user = userRepository.findByEmail(email);
-                if (user == null) {
-                    throw new MailerExceptions.NothingToChangeException("Tried to change an email of " + email + " but email not found!");
-                }
-                user.setEmail(newEmail);
-                userRepository.save(user);
-                if(logger != null) {
-                    logger.log().info("Email " + email + " changed to " + newEmail + " successfully!");
-                }
-                return ModelMapper.toUserModel(user);
-
-            } else {
+            if ((!newEmail.matches(regexPattern))) {
                 throw new MailerExceptions.IncorrectChangeException("Tried to change email " + email + " to " + newEmail + ", but it is not correct email address!");
             }
-        }
+            UserEntity user = userRepository.findByEmail(email);
+            if (user == null) {
+                throw new MailerExceptions.NothingToChangeException("Tried to change an email of " + email + " but email not found!");
+            }
+            user.setEmail(newEmail);
+            userRepository.save(user);
+            if(logger != null) {
+                logger.log().info("Email " + email + " changed to " + newEmail + " successfully!");
+            }
+            return ModelMapper.toUserModel(user);
+            }
         catch (Exception e){
             if(logger != null) {
                 logger.log().info("Error during changing email from " + email + " to " + newEmail + ": " + e);
