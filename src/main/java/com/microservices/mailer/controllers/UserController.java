@@ -7,6 +7,7 @@ import com.microservices.mailer.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -20,24 +21,40 @@ public class UserController {
     @PostMapping("/AddEmail")
     @ResponseStatus(HttpStatus.CREATED)
     public UserModel addEmail(@RequestBody UserEntity entity) throws Exception {
-        return userService.createUser(entity);
+        try {
+            return userService.createUser(entity);
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There was a problem with adding an email: " ,e);
+        }
     }
     @GetMapping("/GetAll")
     @ResponseStatus(HttpStatus.OK)
     public List<UserModel> getAllEmails() throws Exception {
-        return userService.getAll();
+        try {
+            return userService.getAll();
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There was a problem with obtaining list of emails: " ,e);
+        }
     }
 
     @DeleteMapping("/DeleteEmail/{email}")
     @ResponseStatus(HttpStatus.OK)
-    public UserModel remove(@PathVariable String email) throws Exception {
-        return userService.remove(email);
+    public UserModel remove(@PathVariable String email) throws ResponseStatusException {
+        try {
+            return userService.remove(email);
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There was a problem with deleting an email: " ,e);
+        }
     }
 
     @PutMapping("/ChangeEmail")
     @ResponseStatus(HttpStatus.OK)
-    public UserModel changeMail(@RequestParam String email, @RequestParam String newEmail) throws Exception {
-        return userService.changeEmail(email, newEmail);
+    public UserModel changeMail(@RequestParam String email, @RequestParam String newEmail) throws ResponseStatusException {
+        try {
+            return userService.changeEmail(email, newEmail);
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There was a problem with changing an email: " ,e);
+        }
     }
 
 

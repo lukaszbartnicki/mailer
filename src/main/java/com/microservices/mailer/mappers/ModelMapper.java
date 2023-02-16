@@ -15,12 +15,11 @@ public class ModelMapper {
         return result;
     }
 
-    public List<UserModel> toUserModelList(List<UserEntity> all) {
+    public static List<UserModel> toUserModelList(List<UserEntity> all) {
         List<UserModel> emailsList = new ArrayList<>();
         for (UserEntity userEntity: all){
             emailsList.add(toUserModel(userEntity));
         }
         return emailsList;
     }
-
 }

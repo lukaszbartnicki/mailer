@@ -1,6 +1,7 @@
 package com.microservices.mailer.services;
 
 import com.microservices.mailer.config.GeneralLogger;
+import com.microservices.mailer.config.MailerExceptions;
 import com.microservices.mailer.dto.EmailBody;
 import com.microservices.mailer.dto.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,11 @@ public class EmailService{
         emailSender.send(message);
     }
 
-    public Long sendEmailsTo(List<UserModel> users, EmailBody emailBody) throws Exception {
+    public Long sendEmailsTo(List<UserModel> users, EmailBody emailBody) throws RuntimeException {
         try {
             Long emailsSend = 0L;
             if (users.isEmpty()) {
-                throw new Exception("Tried to send emails, but no emails found in database!");
+                throw new MailerExceptions.NothingToSendException("Tried to send emails, but no emails found in database!");
             }
             else {
                 for (UserModel user : users) {
@@ -48,7 +49,7 @@ public class EmailService{
             }
         }catch (Exception e){
             logger.log().info("Error occurred during sending emails: " + e);
-            throw new Exception("Error occurred during sending emails", e);
+            throw new RuntimeException("Error occurred during sending emails", e);
         }
 
     }

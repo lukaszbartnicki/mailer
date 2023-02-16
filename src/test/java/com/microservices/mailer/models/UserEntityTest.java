@@ -1,40 +1,27 @@
 package com.microservices.mailer.models;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class UserEntityTest {
-
-    @Test
-    void getId() {
-    }
+@DataJpaTest
+public class UserEntityTest {
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Test
-    void getEmail() {
-    }
+    public void testSaveAndFind() {
+        UserEntity user = new UserEntity();
+        user.setEmail("test@example.com");
+        entityManager.persist(user);
 
-    @Test
-    void setId() {
-    }
-
-    @Test
-    void setEmail() {
-    }
-
-    @Test
-    void testEquals() {
-    }
-
-    @Test
-    void canEqual() {
-    }
-
-    @Test
-    void testHashCode() {
-    }
-
-    @Test
-    void testToString() {
+        UserEntity savedUser = entityManager.find(UserEntity.class, user.getId());
+        assertNotNull(savedUser);
+        assertEquals(user.getEmail(), savedUser.getEmail());
     }
 }
